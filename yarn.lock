@@ -963,6 +963,14 @@ anymatch@^3.0.3:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+apollo-errors@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/apollo-errors/-/apollo-errors-1.9.0.tgz#f1ed0ca0a6be5cd2f24e2eaa7b0860a10146ff51"
+  integrity sha512-XVukHd0KLvgY6tNjsPS3/Re3U6RQlTKrTbIpqqeTMo2N34uQMr+H1UheV21o8hOZBAFosvBORVricJiP5vfmrw==
+  dependencies:
+    assert "^1.4.1"
+    extendable-error "^0.1.5"
+
 aproba@^1.0.3:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"
@@ -1054,6 +1062,14 @@ assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/assert-plus/-/assert-plus-1.0.0.tgz#f12e0f3c5d77b0b1cdd9146942e4e96c1e4dd525"
   integrity sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=
+
+assert@^1.4.1:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/assert/-/assert-1.5.0.tgz#55c109aaf6e0aefdb3dc4b71240c70bf574b18eb"
+  integrity sha512-EDsgawzwoun2CZkCgtxJbv392v4nbk9XDD06zI+kQYoBM/3RBWLlEyJARDOmhAAosBjWACEkKL6S+lIZtcAubA==
+  dependencies:
+    object-assign "^4.1.1"
+    util "0.10.3"
 
 assign-symbols@^1.0.0:
   version "1.0.0"
@@ -1520,7 +1536,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-concurrently@^6.0.0:
+concurrently@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-6.0.1.tgz#b472efd9398bd9f5b117e22f72c3e50bf0a8a651"
   integrity sha512-YCF/Wf31a910hXu7eGN9/SyHKD/usw3Shw4IPYuqIsxxC39v92engYlIlOs/zXnBJtX/6aVuhgzfhZeGJkhU4w==
@@ -2008,7 +2024,7 @@ eslint-plugin-import@^2.22.1:
     resolve "^1.17.0"
     tsconfig-paths "^3.9.0"
 
-eslint-plugin-jest@^24.3.4:
+eslint-plugin-jest@^24.3.5:
   version "24.3.5"
   resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-24.3.5.tgz#71f0b580f87915695c286c3f0eb88cf23664d044"
   integrity sha512-XG4rtxYDuJykuqhsOqokYIR84/C8pRihRtEpVskYLbIIKGwPNW2ySxdctuVzETZE+MbF/e7wmsnbNVpzM0rDug==
@@ -2027,12 +2043,12 @@ eslint-plugin-node@^11.1.0:
     resolve "^1.10.1"
     semver "^6.1.0"
 
-eslint-plugin-promise@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-4.3.1.tgz#61485df2a359e03149fdafc0a68b0e030ad2ac45"
-  integrity sha512-bY2sGqyptzFBDLh/GMbAxfdJC+b0f23ME63FOE4+Jao0oZ3E1LEwFtWJX/1pGMJLiTtrSSern2CRM/g+dfc0eQ==
+eslint-plugin-promise@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-5.1.0.tgz#fb2188fb734e4557993733b41aa1a688f46c6f24"
+  integrity sha512-NGmI6BH5L12pl7ScQHbg7tvtk4wPxxj8yPHH47NvSmMtFneC077PSeY3huFj06ZWZvtbfxSPt3RuOQD5XcR4ng==
 
-eslint-plugin-react@^7.23.1:
+eslint-plugin-react@^7.23.2:
   version "7.23.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.23.2.tgz#2d2291b0f95c03728b55869f01102290e792d494"
   integrity sha512-AfjgFQB+nYszudkxRkTFu0UR1zEQig0ArVMPloKhxwlwkzaw/fBiH0QWcBBhZONlXqQC51+nfqFrkn4EzHcGBw==
@@ -2080,7 +2096,7 @@ eslint-visitor-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz#21fdc8fbcd9c795cc0321f0563702095751511a8"
   integrity sha512-QudtT6av5WXels9WjIM7qz1XD1cWGvX4gGXvp/zBn9nXG02D0utdU3Em2m/QjTnrsk6bBjmCygl3rmj118msQQ==
 
-eslint@^7.23.0:
+eslint@^7.24.0:
   version "7.24.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-7.24.0.tgz#2e44fa62d93892bfdb100521f17345ba54b8513a"
   integrity sha512-k9gaHeHiFmGCDQ2rEfvULlSLruz6tgfA8DEn+rY9/oYPFFTlz55mM/Q/Rij1b2Y42jwZiK3lXvNTw6w6TXzcKQ==
@@ -2248,6 +2264,11 @@ extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
   integrity sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==
+
+extendable-error@^0.1.5:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/extendable-error/-/extendable-error-0.1.7.tgz#60b9adf206264ac920058a7395685ae4670c2b96"
+  integrity sha512-UOiS2in6/Q0FK0R0q6UY9vYpQ21mr/Qn1KOnte7vsACuNJf514WvCCUHSRCPcgjPT2bAhNIJdlE6bVap1GKmeg==
 
 extglob@^2.0.4:
   version "2.0.4"
@@ -2829,6 +2850,11 @@ inherits@2, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+
+inherits@2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.1.tgz#b17d08d326b4423e568eff719f91b0b1cbdf69f1"
+  integrity sha1-sX0I0ya0Qj5Wjv9xn5GwscvfafE=
 
 ini@2.0.0:
   version "2.0.0"
@@ -4227,7 +4253,7 @@ npm-bundled@^1.1.1:
   dependencies:
     npm-normalize-package-bin "^1.0.1"
 
-npm-check-updates@^11.3.0:
+npm-check-updates@^11.4.1:
   version "11.4.1"
   resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-11.4.1.tgz#6079a1a9c84b3d611fabb02c8332a698df9ce249"
   integrity sha512-bWElM5CeJ9gA/wvtqB4ljcKzAZ3BlPM2g/7mVi8mPdCR2N6dhgS4q5GCzQn4ZvpeKSFll3bUGkiR/lgSQOlN8Q==
@@ -5833,7 +5859,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.2.3:
+typescript@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
   integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==
@@ -5940,6 +5966,13 @@ util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+
+util@0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/util/-/util-0.10.3.tgz#7afb1afe50805246489e3db7fe0ed379336ac0f9"
+  integrity sha1-evsa/lCAUkZInj23/g7TeTNqwPk=
+  dependencies:
+    inherits "2.0.1"
 
 uuid@^3.3.2:
   version "3.4.0"
