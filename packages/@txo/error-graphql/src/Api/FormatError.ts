@@ -5,7 +5,6 @@
 **/
 
 import {
-  isInstance as isApolloErrorInstance,
   formatError as formatApolloError,
   ErrorInfo,
 } from 'apollo-errors'
@@ -21,17 +20,7 @@ declare module 'apollo-errors' {
 export function formatError (error: any): ErrorInfo {
   const { originalError } = error
 
-  if (originalError && isApolloErrorInstance(originalError)) {
-    // log internalData to stdout but not include it in the formattedError
-    console.log(
-      JSON.stringify({
-        type: 'error',
-        data: originalError.data,
-        internalData: originalError.internalData,
-        stack: originalError.stack,
-      }),
-    )
-  }
+  console.log(error?.constructor?.name, JSON.stringify(error))
   const formattedApolloError = formatApolloError(error)
   const validationPath = originalError?.internalData?.validationPath
   if (formattedApolloError.path && validationPath) {
