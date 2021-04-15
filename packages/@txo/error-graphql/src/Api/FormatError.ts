@@ -20,8 +20,6 @@ declare module 'apollo-errors' {
   interface ErrorInfo {
     key?: string,
     type?: string,
-    // @ts-expect-error TODO: it's issue in apollo-errors
-    path: string[],
   }
 }
 
