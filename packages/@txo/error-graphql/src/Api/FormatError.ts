@@ -40,7 +40,7 @@ export const formatError = (error: GraphQLError): ExtendedGraphQLFormattedError 
 // export function formatError (error: any): ErrorInfo {
   const originalError = error.originalError as InternalError
 
-  console.log(error?.constructor?.name, JSON.stringify(error))
+  console.log(error?.constructor?.name, JSON.stringify(error, null, 2))
   const formattedApolloError = formatApolloError(error) as FixedErrorInfo
   const validationPath = originalError?.internalData?.validationPath
   if (formattedApolloError.path && validationPath) {
