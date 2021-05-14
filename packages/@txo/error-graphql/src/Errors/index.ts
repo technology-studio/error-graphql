@@ -6,3 +6,4 @@
 
 export * from './MissingAttributeError'
 export * from './NotFoundError'
+export * from './InvalidAttributeError'
