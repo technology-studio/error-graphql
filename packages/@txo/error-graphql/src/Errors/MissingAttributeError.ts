@@ -8,7 +8,7 @@ import { createError } from 'apollo-errors'
 import { ErrorType, ErrorKey } from '../Model/Types'
 
 const MissingAttributeError = createError('MissingAttributeError', {
-  message: 'Missing Attribute Error.',
+  message: 'Missing attribute error.',
   options: {
     showPath: true,
   },

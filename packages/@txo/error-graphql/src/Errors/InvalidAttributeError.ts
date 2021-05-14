@@ -8,12 +8,12 @@ import { createError } from 'apollo-errors'
 import { ErrorType, ErrorKey } from '../Model/Types'
 
 const InvalidAttributeError = createError('InvalidAttributeError', {
-  message: 'Invalid Attribute Error.',
+  message: 'Invalid attribute error.',
   options: {
     showPath: true,
   },
   internalData: {
-    key: ErrorKey.INVALID,
+    key: ErrorKey.INVALID_ATTRIBUTE,
     type: ErrorType.VALIDATION,
   },
 })

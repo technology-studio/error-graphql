@@ -9,7 +9,7 @@ export enum ErrorType {
 }
 
 export enum ErrorKey {
-  INVALID = 'invalid',
+  INVALID_ATTRIBUTE = 'invalid-attribute',
   MISSING_ATTRIBUTE = 'missing-attribute',
   NOT_FOUND = 'not-found',
 }
