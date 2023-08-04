@@ -21,7 +21,7 @@ import {
 
 const log = new Log('txo.error-graphql.src.Api.FormatError')
 
-export const formatErrorInternal = (error: GraphQLError): GraphQLError | ExtendedGraphQLFormattedError => {
+export const formatError = (error: GraphQLError): GraphQLError | ExtendedGraphQLFormattedError => {
   const originalError = error.originalError ?? error
 
   log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify(error, null, 2))
