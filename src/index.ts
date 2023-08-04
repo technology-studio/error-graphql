@@ -4,6 +4,7 @@
  * @Copyright: Technology Studio
 **/
 
+export * from './Api/CreateError'
 export * from './Api/FormatError'
 export * from './Errors'
 export * from './Model/Types'
