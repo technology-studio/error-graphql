@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/technology-studio/error-graphql/compare/v2.0.1...v2.0.2) (2023-08-04)
+
+
+### Bug fixes
+
+* update createError to treat result as error ([#5](https://github.com/technology-studio/error-graphql/issues/5)) ([c82288e](https://github.com/technology-studio/error-graphql/commit/c82288ef31f0115417d3e53dae29e1e3758d14d2))
+
 ## [2.0.1](https://github.com/technology-studio/error-graphql/compare/v2.0.0...v2.0.1) (2023-08-04)
 
 
