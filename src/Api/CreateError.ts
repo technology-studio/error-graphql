@@ -106,6 +106,10 @@ class ApolloError extends ExtendableError {
 
 export const isApolloErrorInstance = (e: unknown): e is ApolloError => e instanceof ApolloError
 
-export const createError = (name: string, config: CreateConfig): typeof ApolloError.constructor => (
+type PublicPart<T> = {
+  [K in keyof T]: T[K];
+} & Error
+
+export const createError = (name: string, config: CreateConfig): new (constructorConfig?: ConstructorConfig) => PublicPart<ApolloError> => (
   ApolloError.bind(null, name, config)
 )
