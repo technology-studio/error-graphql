@@ -8,6 +8,7 @@ import { ExtendableError } from 'extendable-error'
 import {
   type GraphQLError, type SourceLocation,
 } from 'graphql'
+import { isNotEmptyString } from '@txo/types'
 
 import {
   type ConstructorConfig,
@@ -18,7 +19,7 @@ import {
 
 const stringFallback = (args: (string | null | undefined)[], defaultValue: string | (() => string)): string => {
   for (const arg of args) {
-    if (arg != null && arg !== '') {
+    if (isNotEmptyString(arg)) {
       return arg
     }
   }
