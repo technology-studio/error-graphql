@@ -4,17 +4,17 @@
  * @Copyright: Technology Studio
 **/
 
-import { createError } from 'apollo-errors'
-import { ErrorType, ErrorKey } from '../Model/Types'
+import { createError } from '../Api/CreateError'
+import {
+  INVALID_ATTRIBUTE, VALIDATION,
+} from '../Model/Types'
 
 const InvalidAttributeError = createError('InvalidAttributeError', {
   message: 'Invalid attribute error.',
+  key: INVALID_ATTRIBUTE,
+  type: VALIDATION,
   options: {
     showPath: true,
-  },
-  internalData: {
-    key: ErrorKey.INVALID_ATTRIBUTE,
-    type: ErrorType.VALIDATION,
   },
 })
 
