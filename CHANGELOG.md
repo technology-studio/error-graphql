@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/technology-studio/error-graphql/compare/v2.0.2...v2.0.3) (2023-08-04)
+
+
+### Bug fixes
+
+* rename formatErrorInternal into formatError ([#6](https://github.com/technology-studio/error-graphql/issues/6)) ([c16b87b](https://github.com/technology-studio/error-graphql/commit/c16b87b0a50a4dc34736d7841986bbfc6a941097))
+
 ## [2.0.2](https://github.com/technology-studio/error-graphql/compare/v2.0.1...v2.0.2) (2023-08-04)
 
 
