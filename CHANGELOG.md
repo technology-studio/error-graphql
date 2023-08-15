@@ -1,3 +1,10 @@
+## [2.0.5](https://github.com/technology-studio/error-graphql/compare/v2.0.4...v2.0.5) (2023-08-15)
+
+
+### Bug fixes
+
+* **deps:** update dependency @txo/types to ^1.6.1 ([335c985](https://github.com/technology-studio/error-graphql/commit/335c98588178e6697321c701ac6ce47d844887f5))
+
 ## [2.0.4](https://github.com/technology-studio/error-graphql/compare/v2.0.3...v2.0.4) (2023-08-10)
 
 
