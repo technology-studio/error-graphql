@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "@txo/log": "^2.0.12",
-    "@txo/types": "^1.5.0",
+    "@txo/types": "^1.6.1",
     "extendable-error": "^0.1.7"
   },
   "devDependencies": {
