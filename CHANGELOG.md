@@ -1,3 +1,10 @@
+## [2.0.8](https://github.com/technology-studio/error-graphql/compare/v2.0.7...v2.0.8) (2023-09-20)
+
+
+### Bug fixes
+
+* **deps:** update dependency @txo/log to ^2.0.13 ([1b17ccc](https://github.com/technology-studio/error-graphql/commit/1b17ccc0e47097d84cd67f9dd2be7ce25aec9bf2))
+
 ## [2.0.7](https://github.com/technology-studio/error-graphql/compare/v2.0.6...v2.0.7) (2023-09-20)
 
 
