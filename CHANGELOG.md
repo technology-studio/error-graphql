@@ -1,3 +1,10 @@
+## [2.0.7](https://github.com/technology-studio/error-graphql/compare/v2.0.6...v2.0.7) (2023-09-20)
+
+
+### Bug fixes
+
+* recreate yarn.lock ([#70](https://github.com/technology-studio/error-graphql/issues/70)) ([86784f9](https://github.com/technology-studio/error-graphql/commit/86784f9dfa685d538ba84e1dfaae69571de4f77e))
+
 ## [2.0.6](https://github.com/technology-studio/error-graphql/compare/v2.0.5...v2.0.6) (2023-08-30)
 
 
