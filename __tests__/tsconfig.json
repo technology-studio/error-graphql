@@ -1,6 +1,13 @@
 {
   "extends": "../tsconfig-base.json",
   "compilerOptions": {
+    "rootDir": "../",
+    "baseUrl": "../",
+    "paths": {
+      "Config/*": ["./__tests__/Config/*"],
+      "Utils/*": ["./__tests__/Utils/*"],
+      "src": ["./src"]
+    }
   },
   "include": [
     "./**/*.ts"
