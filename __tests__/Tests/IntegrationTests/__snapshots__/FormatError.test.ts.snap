@@ -1,0 +1,271 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Integration test - FormatError should handle MissingAttributeError with custom message and data 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {
+        "custom": "data",
+      },
+      "key": "missing-attribute",
+      "message": "Custom Message",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle MissingAttributeError with default configuration 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle MissingAttributeError with internalData 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle MissingAttributeError with showPath and showLocations options 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "locations": [
+        {
+          "column": 15,
+          "line": 1,
+        },
+      ],
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle MissingAttributeError with time_thrown 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T01:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle MissingAttributeError with validationPath 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+        "path",
+        "to",
+        "error",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should handle a generic Error 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "extensions": {
+        "code": "INTERNAL_SERVER_ERROR",
+        "exception": {
+          "stacktrace": [
+            "Error: Custom Error",
+            "    at CustomFunction (/path/to/custom/file:line:column)",
+            "    at AnotherFunction (/path/to/another/file:line:column)",
+          ],
+        },
+      },
+      "locations": [
+        {
+          "column": 15,
+          "line": 1,
+        },
+      ],
+      "message": "Generic Error",
+      "path": [
+        "books",
+      ],
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should serialize error with mixed configurations 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {
+        "attribute": "value",
+      },
+      "key": "missing-attribute",
+      "locations": [
+        {
+          "column": 15,
+          "line": 1,
+        },
+      ],
+      "message": "Custom Message",
+      "name": "MissingAttributeError",
+      "path": [
+        "books",
+      ],
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
+
+exports[`Integration test - FormatError should serialize error without locations and path when options are false 1`] = `
+{
+  "data": {
+    "books": null,
+  },
+  "errors": [
+    {
+      "data": {},
+      "key": "missing-attribute",
+      "message": "Missing attribute error.",
+      "name": "MissingAttributeError",
+      "time_thrown": "2023-01-01T00:00:00Z",
+      "type": "validation",
+    },
+  ],
+  "extensions": undefined,
+  "http": {
+    "headers": Headers {
+      Symbol(map): {},
+    },
+  },
+}
+`;
