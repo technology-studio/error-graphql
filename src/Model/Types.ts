@@ -4,10 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-import type {
-  GraphQLFormattedError, SourceLocation,
-} from 'graphql'
-
 export const VALIDATION = 'validation'
 
 export interface AllErrorTypes {
@@ -48,19 +44,10 @@ export interface ConstructorConfig extends BaseConfig {
   validationPath?: string[],
 }
 
-export interface SerialisedApolloError {
+export interface AdvancedGraphQLFormattedErrorExtensions {
   key: string,
   type?: ErrorType,
-  message: string,
   name: string,
-  time_thrown: string,
+  timeThrown: string,
   data?: Record<string, unknown>,
-  path?: (string | number)[],
-  locations?: readonly SourceLocation[],
-}
-
-export interface ExtendedGraphQLFormattedError extends GraphQLFormattedError {
-  name: string,
-  key: string,
-  type?: ErrorType,
 }

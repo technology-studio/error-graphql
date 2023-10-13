@@ -5,8 +5,9 @@
  */
 
 import {
-  ApolloServer, gql,
-} from 'apollo-server'
+  ApolloServer,
+} from '@apollo/server'
+import { gql } from 'graphql-tag'
 
 import { stubStack } from 'Utils/Error'
 import {

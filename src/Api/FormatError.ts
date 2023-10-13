@@ -6,7 +6,7 @@
 **/
 
 import type {
-  GraphQLError,
+  GraphQLError, GraphQLFormattedError,
 } from 'graphql'
 import { Log } from '@txo/log'
 
@@ -16,21 +16,22 @@ import type {
 } from '../Model/Types'
 
 import {
-  isApolloErrorInstance,
+  isAdvancedGraphQLErrorInstance,
 } from './CreateError'
 
 const log = new Log('txo.error-graphql.src.Api.FormatError')
 
-export const formatError = (error: GraphQLError): GraphQLError | ExtendedGraphQLFormattedError => {
+export const formatError = (
+  formattedError: GraphQLFormattedError,
+  error: unknown,
+): GraphQLFormattedError => {
   const originalError = error.originalError ?? error
 
   log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify(error, null, 2))
 
-  if (!isApolloErrorInstance(originalError)) {
-    return error
+  if (!isAdvancedGraphQLErrorInstance(originalError)) {
+    return formattedError
   }
 
-  const serialisedError = originalError.serialize(error)
-
-  return serialisedError
+  return originalError.format(formattedError, error)
 }
