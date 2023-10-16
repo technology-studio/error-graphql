@@ -6,14 +6,14 @@
 **/
 
 import { createError } from '../Api/CreateError'
-import { NOT_FOUND } from '../Model/Types'
+import {
+  ERROR_CODE_VALIDATION_ERROR, NOT_FOUND,
+} from '../Model/Types'
 
 const NotFoundError = createError('NotFoundError', {
   message: 'Not found error.',
   key: NOT_FOUND,
-  options: {
-    showPath: true,
-  },
+  code: ERROR_CODE_VALIDATION_ERROR,
 })
 
 export { NotFoundError }

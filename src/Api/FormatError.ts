@@ -14,20 +14,28 @@ import {
 
 const log = new Log('txo.error-graphql.src.Api.FormatError')
 
+const removeInternalData = (error: GraphQLFormattedError): GraphQLFormattedError => {
+  if (error.extensions?.internalData != null) {
+    const { internalData, ...extensions } = error.extensions
+    return {
+      ...error,
+      extensions,
+    }
+  }
+  return error
+}
+
 export const formatError = (
   formattedError: GraphQLFormattedError,
   error: unknown,
 ): GraphQLFormattedError => {
   log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify({ formattedError, error }, null, 2))
-  if (!isGraphQLError(error)) {
-    return formattedError
+  if (isGraphQLError(error)) {
+    const advancedGraphQLError = unwrapAdvancedGraphQLError(error)
+    if (advancedGraphQLError != null) {
+      return removeInternalData(advancedGraphQLError.format(formattedError))
+    }
   }
 
-  const advancedGraphQLError = unwrapAdvancedGraphQLError(error)
-
-  if (advancedGraphQLError != null) {
-    return advancedGraphQLError.format(formattedError)
-  }
-
-  return formattedError
+  return removeInternalData(formattedError)
 }

@@ -4,13 +4,14 @@
  * @Copyright: Technology Studio
 **/
 
-export const VALIDATION = 'validation'
+import { type ApolloServerErrorCode } from '@apollo/server/errors'
+export const ERROR_CODE_VALIDATION_ERROR = 'VALIDATION_ERROR'
 
-export interface AllErrorTypes {
-  VALIDATION: typeof VALIDATION,
+export interface AllErrorCodes {
+  VALIDATION_ERROR: typeof ERROR_CODE_VALIDATION_ERROR,
 }
 
-export type ErrorType = AllErrorTypes[keyof AllErrorTypes]
+export type ErrorCode = AllErrorCodes[keyof AllErrorCodes] | ApolloServerErrorCode
 
 export const INVALID_ATTRIBUTE = 'invalid-attribute'
 export const MISSING_ATTRIBUTE = 'missing-attribute'
@@ -29,15 +30,11 @@ export interface BaseConfig {
   time_thrown?: string,
   data?: Record<string, unknown>,
   internalData?: Record<string, unknown>,
-  options?: {
-    showPath?: boolean,
-    showLocations?: boolean,
-  },
 }
 
 export interface CreateConfig extends BaseConfig {
   key: string,
-  type?: ErrorType,
+  code: ErrorCode,
 }
 
 export interface ConstructorConfig extends BaseConfig {
@@ -46,7 +43,7 @@ export interface ConstructorConfig extends BaseConfig {
 
 export interface AdvancedGraphQLFormattedErrorExtensions {
   key: string,
-  type?: ErrorType,
+  code: ErrorCode,
   name: string,
   timeThrown: string,
   data?: Record<string, unknown>,

@@ -7,16 +7,13 @@
 
 import { createError } from '../Api/CreateError'
 import {
-  MISSING_ATTRIBUTE, VALIDATION,
+  MISSING_ATTRIBUTE, ERROR_CODE_VALIDATION_ERROR,
 } from '../Model/Types'
 
 const MissingAttributeError = createError('MissingAttributeError', {
   message: 'Missing attribute error.',
   key: MISSING_ATTRIBUTE,
-  type: VALIDATION,
-  options: {
-    showPath: true,
-  },
+  code: ERROR_CODE_VALIDATION_ERROR,
 })
 
 export {
