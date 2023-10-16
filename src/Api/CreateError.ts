@@ -52,7 +52,7 @@ const extensionsFactory = (config: CreateConfig, ctorConfig: ConstructorConfig):
   } satisfies GraphQLErrorExtensions
 }
 
-class AdvancedGraphQLError extends GraphQLError {
+export class AdvancedGraphQLError extends GraphQLError {
   constructor (name: string, config: CreateConfig, ctorConfig: ConstructorConfig = {}) {
     super(stringFallback([ctorConfig.message, config.message], ''), {
       extensions: extensionsFactory(config, ctorConfig),
@@ -60,7 +60,7 @@ class AdvancedGraphQLError extends GraphQLError {
     this.name = name
   }
 
-  format (parentError: GraphQLError, error): GraphQLFormattedError {
+  format (originalGraphQLFormattedError: GraphQLFormattedError): GraphQLFormattedError {
     const {
       key,
       type,
@@ -88,11 +88,29 @@ class AdvancedGraphQLError extends GraphQLError {
       serialisedError.path = [...(parentError.path ?? this.path ?? []), ...(validationPath ?? [])]
     }
 
-    return serialisedError
+    return new GraserialisedError()
   }
 }
 
+export const isGraphQLError = (error: unknown): error is GraphQLError => error instanceof GraphQLError
+
 export const isAdvancedGraphQLErrorInstance = (e: unknown): e is AdvancedGraphQLError => e instanceof AdvancedGraphQLError
+
+export const unwrapAdvancedGraphQLError = (error: GraphQLError): AdvancedGraphQLError | undefined => {
+  let pivotError: GraphQLError | undefined = error
+  let advancedGraphQLError: AdvancedGraphQLError | undefined
+  while (pivotError != null) {
+    if (isAdvancedGraphQLErrorInstance(pivotError)) {
+      advancedGraphQLError = pivotError
+    }
+    pivotError = (
+      pivotError.originalError != null && isGraphQLError(pivotError.originalError)
+        ? pivotError.originalError
+        : undefined
+    )
+  }
+  return advancedGraphQLError
+}
 
 type PublicPart<T> = {
   [K in keyof T]: T[K];

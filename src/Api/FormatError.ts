@@ -5,18 +5,11 @@
  * @Copyright: Technology Studio
 **/
 
-import type {
-  GraphQLError, GraphQLFormattedError,
-} from 'graphql'
+import type { GraphQLFormattedError } from 'graphql'
 import { Log } from '@txo/log'
 
-import type {
-  ExtendedGraphQLFormattedError,
-
-} from '../Model/Types'
-
 import {
-  isAdvancedGraphQLErrorInstance,
+  isGraphQLError, unwrapAdvancedGraphQLError,
 } from './CreateError'
 
 const log = new Log('txo.error-graphql.src.Api.FormatError')
@@ -25,13 +18,16 @@ export const formatError = (
   formattedError: GraphQLFormattedError,
   error: unknown,
 ): GraphQLFormattedError => {
-  const originalError = error.originalError ?? error
-
-  log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify(error, null, 2))
-
-  if (!isAdvancedGraphQLErrorInstance(originalError)) {
+  log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify({ formattedError, error }, null, 2))
+  if (!isGraphQLError(error)) {
     return formattedError
   }
 
-  return originalError.format(formattedError, error)
+  const advancedGraphQLError = unwrapAdvancedGraphQLError(error)
+
+  if (advancedGraphQLError != null) {
+    return advancedGraphQLError.format(formattedError)
+  }
+
+  return formattedError
 }
