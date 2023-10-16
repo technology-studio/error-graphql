@@ -5,8 +5,9 @@
  */
 
 import {
-  ApolloServer, gql,
-} from 'apollo-server'
+  ApolloServer,
+} from '@apollo/server'
+import { gql } from 'graphql-tag'
 
 import { stubStack } from 'Utils/Error'
 import {
@@ -37,7 +38,7 @@ const executeErrorOperation = async <ERROR extends Error>(error: ERROR): Promise
   return await new ApolloServer({
     typeDefs,
     resolvers,
-    debug: true,
+    includeStacktraceInErrorResponses: true,
     formatError,
   }).executeOperation({
     query: 'query Books { books { title } }',
@@ -45,12 +46,23 @@ const executeErrorOperation = async <ERROR extends Error>(error: ERROR): Promise
   })
 }
 
+const logicalToISOStringSpyOn = (): void => {
+  let counter = 0
+  jest.spyOn(Date.prototype, 'toISOString').mockImplementation(() => {
+    const minutes = Math.floor(counter / 60)
+    const seconds = counter % 60
+    const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+    counter++
+    return `2023-01-01T00:${timeString}Z`
+  })
+}
+
 describe('Integration test - FormatError', () => {
-  beforeAll(() => {
-    jest.spyOn(Date.prototype, 'toISOString').mockReturnValue('2023-01-01T00:00:00Z')
+  beforeEach(() => {
+    logicalToISOStringSpyOn()
   })
 
-  afterAll(() => {
+  afterEach(() => {
     jest.restoreAllMocks()
   })
 
@@ -58,38 +70,41 @@ describe('Integration test - FormatError', () => {
     const result = await executeErrorOperation(new Error('Generic Error'))
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "extensions": {
-              "code": "INTERNAL_SERVER_ERROR",
-              "exception": {
-                "stacktrace": [
-                  "Error: Custom Error",
-                  "    at CustomFunction (/path/to/custom/file:line:column)",
-                  "    at AnotherFunction (/path/to/another/file:line:column)",
+        "body": {
+          "kind": "single",
+          "singleResult": {
+            "data": {
+              "books": null,
+            },
+            "errors": [
+              {
+                "extensions": {
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Generic Error",
+                "path": [
+                  "books",
                 ],
               },
-            },
-            "locations": [
-              {
-                "column": 15,
-                "line": 1,
-              },
-            ],
-            "message": "Generic Error",
-            "path": [
-              "books",
             ],
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)
@@ -99,27 +114,44 @@ describe('Integration test - FormatError', () => {
     const result = await executeErrorOperation(new MissingAttributeError())
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
+        "body": {
+          "kind": "single",
+          "singleResult": {
+            "data": {
+              "books": null,
+            },
+            "errors": [
+              {
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T00:00:00Z",
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Missing attribute error.",
+                "path": [
+                  "books",
+                ],
+              },
             ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)
@@ -134,29 +166,47 @@ describe('Integration test - FormatError', () => {
     )
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
+        "body": {
+          "kind": "single",
+          "singleResult": {
             "data": {
-              "custom": "data",
+              "books": null,
             },
-            "key": "missing-attribute",
-            "message": "Custom Message",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
+            "errors": [
+              {
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "data": {
+                    "custom": "data",
+                  },
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T00:00:00Z",
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Custom Message",
+                "path": [
+                  "books",
+                ],
+              },
             ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)
@@ -170,73 +220,52 @@ describe('Integration test - FormatError', () => {
     )
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
-              "path",
-              "to",
-              "error",
-            ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
-          },
-        ],
-        "extensions": undefined,
-        "http": {
-          "headers": Headers {
-            Symbol(map): {},
-          },
-        },
-      }
-    `)
-  })
-
-  test('should handle MissingAttributeError with showPath and showLocations options', async () => {
-    const result = await executeErrorOperation(
-      new MissingAttributeError({
-        options: {
-          showPath: true,
-          showLocations: true,
-        },
-      }),
-    )
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "locations": [
+        "body": {
+          "kind": "single",
+          "singleResult": {
+            "data": {
+              "books": null,
+            },
+            "errors": [
               {
-                "column": 15,
-                "line": 1,
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T00:00:00Z",
+                  "validationPath": [
+                    "path",
+                    "to",
+                    "error",
+                  ],
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Missing attribute error.",
+                "path": [
+                  "books",
+                  "path",
+                  "to",
+                  "error",
+                ],
               },
             ],
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
-            ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)
@@ -250,27 +279,44 @@ describe('Integration test - FormatError', () => {
     )
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
+        "body": {
+          "kind": "single",
+          "singleResult": {
+            "data": {
+              "books": null,
+            },
+            "errors": [
+              {
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T01:00:00Z",
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Missing attribute error.",
+                "path": [
+                  "books",
+                ],
+              },
             ],
-            "time_thrown": "2023-01-01T01:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)
@@ -284,61 +330,44 @@ describe('Integration test - FormatError', () => {
     )
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
+        "body": {
+          "kind": "single",
+          "singleResult": {
+            "data": {
+              "books": null,
+            },
+            "errors": [
+              {
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T00:00:00Z",
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Missing attribute error.",
+                "path": [
+                  "books",
+                ],
+              },
             ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
-        },
-      }
-    `)
-  })
-
-  test('should serialize error without locations and path when options are false', async () => {
-    const result = await executeErrorOperation(
-      new MissingAttributeError({
-        options: {
-          showPath: false,
-          showLocations: false,
-        },
-      }),
-    )
-    expect(result).toMatchInlineSnapshot(`
-      {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
-            "data": {},
-            "key": "missing-attribute",
-            "message": "Missing attribute error.",
-            "name": "MissingAttributeError",
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
-          },
-        ],
-        "extensions": undefined,
-        "http": {
-          "headers": Headers {
-            Symbol(map): {},
-          },
+          "status": undefined,
         },
       }
     `)
@@ -349,43 +378,52 @@ describe('Integration test - FormatError', () => {
       new MissingAttributeError({
         message: 'Custom Message',
         data: { attribute: 'value' },
-        options: {
-          showPath: true,
-          showLocations: true,
-        },
+        internalData: { internal: 'data' },
       }),
     )
     expect(result).toMatchInlineSnapshot(`
       {
-        "data": {
-          "books": null,
-        },
-        "errors": [
-          {
+        "body": {
+          "kind": "single",
+          "singleResult": {
             "data": {
-              "attribute": "value",
+              "books": null,
             },
-            "key": "missing-attribute",
-            "locations": [
+            "errors": [
               {
-                "column": 15,
-                "line": 1,
+                "extensions": {
+                  "code": "VALIDATION_ERROR",
+                  "data": {
+                    "attribute": "value",
+                  },
+                  "key": "missing-attribute",
+                  "name": "MissingAttributeError",
+                  "stacktrace": [
+                    "Error: Custom Error",
+                    "    at CustomFunction (/path/to/custom/file:line:column)",
+                    "    at AnotherFunction (/path/to/another/file:line:column)",
+                  ],
+                  "timeThrown": "2023-01-01T00:00:00Z",
+                },
+                "locations": [
+                  {
+                    "column": 15,
+                    "line": 1,
+                  },
+                ],
+                "message": "Custom Message",
+                "path": [
+                  "books",
+                ],
               },
             ],
-            "message": "Custom Message",
-            "name": "MissingAttributeError",
-            "path": [
-              "books",
-            ],
-            "time_thrown": "2023-01-01T00:00:00Z",
-            "type": "validation",
           },
-        ],
-        "extensions": undefined,
+        },
         "http": {
-          "headers": Headers {
-            Symbol(map): {},
+          "headers": Map {
+            "cache-control" => "no-store",
           },
+          "status": undefined,
         },
       }
     `)

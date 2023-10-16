@@ -5,32 +5,37 @@
  * @Copyright: Technology Studio
 **/
 
-import type {
-  GraphQLError,
-} from 'graphql'
+import type { GraphQLFormattedError } from 'graphql'
 import { Log } from '@txo/log'
 
-import type {
-  ExtendedGraphQLFormattedError,
-
-} from '../Model/Types'
-
 import {
-  isApolloErrorInstance,
+  isGraphQLError, unwrapAdvancedGraphQLError,
 } from './CreateError'
 
 const log = new Log('txo.error-graphql.src.Api.FormatError')
 
-export const formatError = (error: GraphQLError): GraphQLError | ExtendedGraphQLFormattedError => {
-  const originalError = error.originalError ?? error
+const removeInternalData = (error: GraphQLFormattedError): GraphQLFormattedError => {
+  if (error.extensions?.internalData != null) {
+    const { internalData, ...extensions } = error.extensions
+    return {
+      ...error,
+      extensions,
+    }
+  }
+  return error
+}
 
-  log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify(error, null, 2))
-
-  if (!isApolloErrorInstance(originalError)) {
-    return error
+export const formatError = (
+  formattedError: GraphQLFormattedError,
+  error: unknown,
+): GraphQLFormattedError => {
+  log.debugLazy(`formatError ${error?.constructor?.name}`, () => JSON.stringify({ formattedError, error }, null, 2))
+  if (isGraphQLError(error)) {
+    const advancedGraphQLError = unwrapAdvancedGraphQLError(error)
+    if (advancedGraphQLError != null) {
+      return removeInternalData(advancedGraphQLError.format(formattedError))
+    }
   }
 
-  const serialisedError = originalError.serialize(error)
-
-  return serialisedError
+  return removeInternalData(formattedError)
 }
