@@ -27,7 +27,7 @@ const stringFallback = (args: (string | null | undefined)[], defaultValue: strin
   return typeof defaultValue === 'function' ? defaultValue() : defaultValue
 }
 
-interface AdvancedGraphQLErrorExtensions {
+export interface AdvancedGraphQLErrorExtensions {
   name: string,
   code: ErrorCode,
   key: string,
