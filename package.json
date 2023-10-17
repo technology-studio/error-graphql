@@ -41,13 +41,14 @@
     "@txo/types": "^1.7.0"
   },
   "devDependencies": {
+    "@apollo/server": "^4.9.4",
     "@txo-peer-dep/log": "^4.0.2",
     "@txo/commitlint": "^1.0.0",
     "@txo/log-console": "^3.0.0",
     "@txo/semantic-release": "^1.0.0",
     "@types/jest": "^29.5.5",
-    "@typescript-eslint/eslint-plugin": "^6.7.3",
-    "@typescript-eslint/parser": "^6.7.3",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
     "concurrently": "^8.2.1",
     "eslint": "^8.51.0",
     "eslint-config-txo-typescript": "^3.3.33",
