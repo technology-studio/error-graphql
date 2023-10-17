@@ -4,18 +4,19 @@
  * @Copyright: Technology Studio
 **/
 
-import { ExtendableError } from 'extendable-error'
 import {
-  type GraphQLError, type SourceLocation,
+  GraphQLError, type GraphQLErrorExtensions, type GraphQLFormattedError,
 } from 'graphql'
 import { isNotEmptyString } from '@txo/types'
+import { Log } from '@txo/log'
 
 import {
+  type ErrorCode,
   type ConstructorConfig,
   type CreateConfig,
-  type ErrorType,
-  type SerialisedApolloError,
 } from '../Model/Types'
+
+const log = new Log('txo.error-graphql.src.Api.CreateError')
 
 const stringFallback = (args: (string | null | undefined)[], defaultValue: string | (() => string)): string => {
   for (const arg of args) {
@@ -26,90 +27,93 @@ const stringFallback = (args: (string | null | undefined)[], defaultValue: strin
   return typeof defaultValue === 'function' ? defaultValue() : defaultValue
 }
 
-class ApolloError extends ExtendableError {
-  name: string
-  message: string
-  key: string
-  type?: ErrorType
-  validationPath?: string[]
-  time_thrown: string
-  data: Record<string, unknown>
-  internalData: Record<string, unknown>
-  path?: (string | number)[]
-  locations?: SourceLocation[]
-  _showLocations
-  _showPath
+export interface AdvancedGraphQLErrorExtensions {
+  name: string,
+  code: ErrorCode,
+  key: string,
+  validationPath?: string[],
+  timeThrown: string,
+  data?: Record<string, unknown>,
+  internalData?: Record<string, unknown>,
+}
 
+const add = <KEY extends keyof AdvancedGraphQLErrorExtensions>(extensions: AdvancedGraphQLErrorExtensions, key: KEY, value: AdvancedGraphQLErrorExtensions[KEY]): AdvancedGraphQLErrorExtensions => {
+  if (value !== undefined && (typeof value !== 'object' || Object.keys(value).length > 0)) {
+    extensions[key] = value
+  }
+  return extensions
+}
+
+const extensionsFactory = (name: string, config: CreateConfig, ctorConfig: ConstructorConfig): GraphQLErrorExtensions => {
+  const ctorData = ctorConfig.data ?? {}
+  const ctorInternalData = ctorConfig.internalData ?? {}
+  const configData = config.data ?? {}
+  const configInternalData = config.internalData ?? {}
+  const data = { ...configData, ...ctorData }
+  const internalData = { ...configInternalData, ...ctorInternalData }
+  const extensions = {
+    name,
+    code: config.code,
+    key: config.key,
+    timeThrown: stringFallback([ctorConfig.time_thrown, config.time_thrown], () => (new Date()).toISOString()),
+  } satisfies AdvancedGraphQLErrorExtensions
+
+  add(extensions, 'data', data)
+  add(extensions, 'internalData', internalData)
+  add(extensions, 'validationPath', ctorConfig.validationPath)
+
+  return extensions
+}
+
+export class AdvancedGraphQLError extends GraphQLError {
   constructor (name: string, config: CreateConfig, ctorConfig: ConstructorConfig = {}) {
-    super(stringFallback([ctorConfig.message, config.message], ''))
-
-    const timeThrown = stringFallback([ctorConfig.time_thrown, config.time_thrown], () => (new Date()).toISOString())
-    const message = stringFallback([ctorConfig.message, config.message], '')
-    const ctorData = ctorConfig.data ?? {}
-    const ctorInternalData = ctorConfig.internalData ?? {}
-    const configData = config.data ?? {}
-    const configInternalData = config.internalData ?? {}
-    const data = { ...configData, ...ctorData }
-    const internalData = { ...configInternalData, ...ctorInternalData }
-    const ctorOptions = ctorConfig.options ?? {}
-    const configOptions = config.options ?? {}
-    const options = { ...configOptions, ...ctorOptions }
-
-    this.key = config.key
-    this.type = config.type
-    this.validationPath = ctorConfig.validationPath
+    super(stringFallback([ctorConfig.message, config.message], ''), {
+      extensions: extensionsFactory(name, config, ctorConfig),
+    })
     this.name = name
-    this.message = message
-    this.time_thrown = timeThrown
-    this.data = data
-    this.internalData = internalData
-    this._showLocations = options.showLocations ?? false
-    this._showPath = options.showPath ?? false
   }
 
-  serialize (parentError: GraphQLError): SerialisedApolloError {
-    const {
-      key,
-      type,
-      name,
-      message,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      time_thrown,
-      data,
-      _showLocations,
-      _showPath,
-      validationPath,
-    } = this
+  getExtensions (): AdvancedGraphQLErrorExtensions {
+    return this.extensions as unknown as AdvancedGraphQLErrorExtensions
+  }
 
-    const serialisedError: SerialisedApolloError = {
-      key,
-      type,
-      message,
-      name,
-      time_thrown,
-      data,
-    }
-
-    if (_showLocations) {
-      serialisedError.locations = parentError.locations ?? this.locations
-    }
-
-    if (_showPath) {
-      if (parentError.path != null || this.path != null || validationPath != null) {
-        serialisedError.path = [...(parentError.path ?? this.path ?? []), ...(validationPath ?? [])]
+  format (originalGraphQLFormattedError: GraphQLFormattedError): GraphQLFormattedError {
+    log.debugLazy('format', () => JSON.stringify({ originalGraphQLFormattedError, this: this }, null, 2))
+    const { validationPath } = this.getExtensions()
+    if (validationPath != null && validationPath.length > 0) {
+      return {
+        ...originalGraphQLFormattedError,
+        path: [...originalGraphQLFormattedError.path ?? this.path ?? [], ...validationPath],
       }
     }
-
-    return serialisedError
+    return originalGraphQLFormattedError
   }
 }
 
-export const isApolloErrorInstance = (e: unknown): e is ApolloError => e instanceof ApolloError
+export const isGraphQLError = (error: unknown): error is GraphQLError => error instanceof GraphQLError
+
+export const isAdvancedGraphQLErrorInstance = (e: unknown): e is AdvancedGraphQLError => e instanceof AdvancedGraphQLError
+
+export const unwrapAdvancedGraphQLError = (error: GraphQLError): AdvancedGraphQLError | undefined => {
+  let pivotError: GraphQLError | undefined = error
+  let advancedGraphQLError: AdvancedGraphQLError | undefined
+  while (pivotError != null) {
+    if (isAdvancedGraphQLErrorInstance(pivotError)) {
+      advancedGraphQLError = pivotError
+    }
+    pivotError = (
+      pivotError.originalError != null && isGraphQLError(pivotError.originalError)
+        ? pivotError.originalError
+        : undefined
+    )
+  }
+  return advancedGraphQLError
+}
 
 type PublicPart<T> = {
   [K in keyof T]: T[K];
 } & Error
 
-export const createError = (name: string, config: CreateConfig): new (constructorConfig?: ConstructorConfig) => PublicPart<ApolloError> => (
-  ApolloError.bind(null, name, config)
+export const createError = (name: string, config: CreateConfig): new (constructorConfig?: ConstructorConfig) => PublicPart<AdvancedGraphQLError> => (
+  AdvancedGraphQLError.bind(null, name, config)
 )

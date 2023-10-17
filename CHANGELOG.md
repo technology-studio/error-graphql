@@ -1,3 +1,32 @@
+## [3.0.0](https://github.com/technology-studio/error-graphql/compare/v2.0.8...v3.0.0) (2023-10-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** migrate to @apollo/server ^4.0.0, refactor errors structrure and error codes. 
+
+* chore(deps): replace dependency apollo-server with @apollo/server ^4.0.0
+
+* refactor: migrate to @apollo/server
+
+* refactor: migrate format error
+
+* test: migrate all tests to new @apollo/server and update createError and formatError accordingly
+
+* fix: add missing export of interface
+
+* chore: sync with master
+
+### Features
+
+* **deps:** replace dependency apollo-server with @apollo/server ^4.0.0 ([#100](https://github.com/technology-studio/error-graphql/issues/100)) ([d6e0470](https://github.com/technology-studio/error-graphql/commit/d6e047011cf80b2976fc069f20a83bc11720eda4))
+
+
+### Testing
+
+* add integration tests for formatError ([#99](https://github.com/technology-studio/error-graphql/issues/99)) ([e81c4b7](https://github.com/technology-studio/error-graphql/commit/e81c4b70ea129d47ed453bc40d98b46305ffc410))
+* switch to inline jest snapshots ([#103](https://github.com/technology-studio/error-graphql/issues/103)) ([6891001](https://github.com/technology-studio/error-graphql/commit/68910013e340295377ef5b2418580c4b60d43266))
+
 ## [2.0.8](https://github.com/technology-studio/error-graphql/compare/v2.0.7...v2.0.8) (2023-09-20)
 
 

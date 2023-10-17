@@ -4,17 +4,14 @@
  * @Copyright: Technology Studio
 **/
 
-import type {
-  GraphQLFormattedError, SourceLocation,
-} from 'graphql'
+import { type ApolloServerErrorCode } from '@apollo/server/errors'
+export const ERROR_CODE_VALIDATION_ERROR = 'VALIDATION_ERROR'
 
-export const VALIDATION = 'validation'
-
-export interface AllErrorTypes {
-  VALIDATION: typeof VALIDATION,
+export interface AllErrorCodes {
+  VALIDATION_ERROR: typeof ERROR_CODE_VALIDATION_ERROR,
 }
 
-export type ErrorType = AllErrorTypes[keyof AllErrorTypes]
+export type ErrorCode = AllErrorCodes[keyof AllErrorCodes] | ApolloServerErrorCode
 
 export const INVALID_ATTRIBUTE = 'invalid-attribute'
 export const MISSING_ATTRIBUTE = 'missing-attribute'
@@ -33,34 +30,21 @@ export interface BaseConfig {
   time_thrown?: string,
   data?: Record<string, unknown>,
   internalData?: Record<string, unknown>,
-  options?: {
-    showPath?: boolean,
-    showLocations?: boolean,
-  },
 }
 
 export interface CreateConfig extends BaseConfig {
   key: string,
-  type?: ErrorType,
+  code: ErrorCode,
 }
 
 export interface ConstructorConfig extends BaseConfig {
   validationPath?: string[],
 }
 
-export interface SerialisedApolloError {
+export interface AdvancedGraphQLFormattedErrorExtensions {
   key: string,
-  type?: ErrorType,
-  message: string,
+  code: ErrorCode,
   name: string,
-  time_thrown: string,
+  timeThrown: string,
   data?: Record<string, unknown>,
-  path?: (string | number)[],
-  locations?: readonly SourceLocation[],
-}
-
-export interface ExtendedGraphQLFormattedError extends GraphQLFormattedError {
-  name: string,
-  key: string,
-  type?: ErrorType,
 }

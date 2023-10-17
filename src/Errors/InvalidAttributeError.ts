@@ -6,16 +6,14 @@
 
 import { createError } from '../Api/CreateError'
 import {
-  INVALID_ATTRIBUTE, VALIDATION,
+  ERROR_CODE_VALIDATION_ERROR,
+  INVALID_ATTRIBUTE,
 } from '../Model/Types'
 
 const InvalidAttributeError = createError('InvalidAttributeError', {
   message: 'Invalid attribute error.',
   key: INVALID_ATTRIBUTE,
-  type: VALIDATION,
-  options: {
-    showPath: true,
-  },
+  code: ERROR_CODE_VALIDATION_ERROR,
 })
 
 export {
