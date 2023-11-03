@@ -15,9 +15,6 @@ module.exports = {
   testMatch: [
     '<rootDir>/__tests__/Tests/**/?(*.)(spec|test).ts'
   ],
-  transformIgnorePatterns: [
-    '/node_modules/(?!@txo).+\\.js$'
-  ],
   testPathIgnorePatterns: [
     '/node_modules/'
   ],

@@ -29,7 +29,10 @@ export interface BaseConfig {
   message?: string,
   time_thrown?: string,
   data?: Record<string, unknown>,
-  internalData?: Record<string, unknown>,
+  internalData?: Record<string, unknown> & {
+    /** @deprecated use top level validationPath attribute instead */
+    validationPath?: never,
+  },
 }
 
 export interface CreateConfig extends BaseConfig {
