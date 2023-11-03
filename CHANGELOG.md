@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/technology-studio/error-graphql/compare/v3.0.1...v3.0.2) (2023-11-03)
+
+
+### Bug fixes
+
+* trigger publish ([#122](https://github.com/technology-studio/error-graphql/issues/122)) ([955954d](https://github.com/technology-studio/error-graphql/commit/955954d225ffc3b9e32636b79b7e9948a7211208))
+
 ## [3.0.1](https://github.com/technology-studio/error-graphql/compare/v3.0.0...v3.0.1) (2023-11-03)
 
 
