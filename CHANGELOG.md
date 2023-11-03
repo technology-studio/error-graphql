@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/technology-studio/error-graphql/compare/v3.0.0...v3.0.1) (2023-11-03)
+
+
+### Bug fixes
+
+* change build target to es2020 and sync recent changes from boilerplate ([#121](https://github.com/technology-studio/error-graphql/issues/121)) ([be9e452](https://github.com/technology-studio/error-graphql/commit/be9e452e1b2fb89ebc7d3e30ced60a9c92cd9997))
+
 ## [3.0.0](https://github.com/technology-studio/error-graphql/compare/v2.0.8...v3.0.0) (2023-10-16)
 
 
