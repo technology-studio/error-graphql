@@ -10,6 +10,13 @@ const config = [
         project: './__tests__/tsconfig.json',
       },
     },
+    settings: {
+      'import/resolver': {
+        typescript: {
+          project: './__tests__/tsconfig.json',
+        },
+      },
+    },
   },
 ]
 
