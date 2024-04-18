@@ -41,7 +41,7 @@
     "@txo/types": "^1.7.0"
   },
   "devDependencies": {
-    "@apollo/server": "^4.10.3",
+    "@apollo/server": "^4.10.4",
     "@txo-peer-dep/log": "^4.0.4",
     "@txo/commitlint": "^1.0.14",
     "@txo/log-console": "^3.0.0",
