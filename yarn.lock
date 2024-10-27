@@ -6300,10 +6300,10 @@ npm-bundled@^3.0.0:
   dependencies:
     npm-normalize-package-bin "^3.0.0"
 
-npm-check-updates@^17.1.7:
-  version "17.1.7"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-17.1.7.tgz#56c3357a7d5104db2d40b7fae2166f30271bfc5a"
-  integrity sha512-FGjIoaTwNulypIVn+lBpkFyHq2e08b26eVV/MCyPTFcU3mxln6QL465s79WDXtP3dEyE2Wy9cZm5mPlYAM60PA==
+npm-check-updates@^17.1.8:
+  version "17.1.8"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-17.1.8.tgz#9fe65cc23b04086ba6680f7a8bf77201b06383df"
+  integrity sha512-oVPYIdl4NHyz6+TXWWko7c1+cqp7bm+D2fNPjIWQxWm+plJ7cyePc2WcXRKbfuVEnR2QtvBhL58rolkk/H687g==
 
 npm-install-checks@^6.0.0, npm-install-checks@^6.2.0, npm-install-checks@^6.3.0:
   version "6.3.0"
