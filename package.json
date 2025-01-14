@@ -43,7 +43,7 @@
     "@txo/types": "^1.7.0"
   },
   "devDependencies": {
-    "@apollo/server": "^4.11.2",
+    "@apollo/server": "^4.11.3",
     "@txo-peer-dep/log": "^4.0.4",
     "@txo/commitlint": "^1.0.21",
     "@txo/log-console": "^3.0.0",
@@ -51,14 +51,14 @@
     "@txo/tsconfig-cjs": "^2.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.2",
-    "concurrently": "^9.1.0",
+    "concurrently": "^9.1.2",
     "eslint-config-txo-typescript": "^4.0.70",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6",
     "husky": "^9.1.7",
     "jest": "^29.7.0",
-    "lint-staged": "^15.2.11",
-    "npm-check-updates": "^17.1.11",
+    "lint-staged": "^15.3.0",
+    "npm-check-updates": "^17.1.13",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.7.2"
