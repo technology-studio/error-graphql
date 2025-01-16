@@ -30,7 +30,6 @@ const executeErrorOperation = async <ERROR extends Error>(error: ERROR): Promise
   const resolvers = {
     Query: {
       books: () => {
-        // eslint-disable-next-line @typescript-eslint/no-throw-literal
         throw stubedError
       },
     },
