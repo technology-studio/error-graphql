@@ -1,8 +1,9 @@
 [
-  "@typescript-eslint/no-magic-numbers",
   "@typescript-eslint/no-unnecessary-type-parameters",
+  "logical-assignment-operators",
   "@typescript-eslint/no-unsafe-type-assertion",
   "@typescript-eslint/no-import-type-side-effects",
+  "@typescript-eslint/no-magic-numbers",
   "@stylistic/space-before-function-paren",
   "@typescript-eslint/init-declarations",
   "@typescript-eslint/prefer-destructuring"
