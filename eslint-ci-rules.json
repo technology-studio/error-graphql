@@ -1,5 +1,6 @@
 [
   "@typescript-eslint/no-unnecessary-type-parameters",
+  "@typescript-eslint/prefer-nullish-coalescing",
   "logical-assignment-operators",
   "@typescript-eslint/no-unsafe-type-assertion",
   "@typescript-eslint/no-import-type-side-effects",
