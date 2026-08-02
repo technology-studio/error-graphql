@@ -8,8 +8,12 @@ on:
       - synchronize
       - ready_for_review
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   unit:
     name: 'Unit test'
-    uses: technology-studio/github-workflows/.github/workflows/_unit-test.yml@main
+    uses: technology-studio/github-workflows/.github/workflows/_unit-test.yml@fix/codecov-oidc
     secrets: inherit
