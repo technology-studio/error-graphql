@@ -15,5 +15,5 @@ permissions:
 jobs:
   unit:
     name: 'Unit test'
-    uses: technology-studio/github-workflows/.github/workflows/_unit-test.yml@fix/codecov-oidc
+    uses: technology-studio/github-workflows/.github/workflows/_unit-test.yml@main
     secrets: inherit
