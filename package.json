@@ -52,7 +52,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.20.1",
     "concurrently": "^9.2.4",
-    "eslint-config-txo-package-typescript": "^1.0.120",
+    "eslint-config-txo-package-typescript": "^1.0.121",
     "graphql": "^16.14.2",
     "graphql-tag": "^2.12.7",
     "husky": "^9.1.7",
